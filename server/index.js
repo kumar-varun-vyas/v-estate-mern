@@ -5,6 +5,7 @@ dotenv.config()
 
 const userRouter = require('./routes/user.route')
 const authRouter = require('./routes/auth.route')
+const errorHandler = require('./middlewares/errorHandler')
 const app = express()
 app.use(express.json())
 const PORT = 3000
@@ -18,6 +19,8 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 app.use('/api/user', userRouter)
 app.use('/api/auth', authRouter)
 
+
+app.use(errorHandler)
 
 app.listen(PORT, () => {
     console.log("app is listning on ", PORT)
