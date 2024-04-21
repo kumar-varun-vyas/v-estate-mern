@@ -6,6 +6,14 @@ dotenv.config()
 const userRouter = require('./routes/user.route')
 const authRouter = require('./routes/auth.route')
 const errorHandler = require('./middlewares/errorHandler')
+
+process.on('uncaughtException', function (err) {
+    console.log('uncaught exception', err);
+}).on('unhandledRejection', (reason, p) => {
+    console.log('unhandledRejections reason', reason);
+}).on('warning', (warning) => {
+    console.log(`warning, ... ${warning}`);
+});
 const app = express()
 app.use(express.json())
 const PORT = 3000
