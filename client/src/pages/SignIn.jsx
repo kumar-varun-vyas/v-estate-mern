@@ -5,7 +5,8 @@ import { signInFailuer, signInStart, signInSuccess } from '../redux/user/userSli
 
 const SignIn = () => {
     const [formData, setFormData] = useState({})
-    const { loading, error } = useSelector((state) => state.user)
+    const loading = useSelector((state) => state.user.loading)
+    const error = useSelector((state) => state.user.error)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -14,7 +15,6 @@ const SignIn = () => {
             ...formData,
             [e.target.id]: e.target.value
         })
-        setError(false)
     }
 
     const handleSubmit = async (e) => {
@@ -30,7 +30,6 @@ const SignIn = () => {
 
             })
             const data = await res.json();
-            console.log(data)
             if (data.success == false) {
                 dispatch(signInFailuer(data.errMessage))
 
