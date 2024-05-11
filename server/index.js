@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const cookieParser = require('cookie-parser')
 dotenv.config()
 
 const userRouter = require('./routes/user.route')
@@ -14,7 +15,10 @@ process.on('uncaughtException', function (err) {
 }).on('warning', (warning) => {
     console.log(`warning, ... ${warning}`);
 });
+
+
 const app = express()
+app.use(cookieParser())
 app.use(express.json())
 const PORT = 3000
 

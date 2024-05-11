@@ -1,10 +1,11 @@
 const express = require('express');
-const { test } = require('../controllers/user.cont');
+const { updateUser } = require('../controllers/user.cont');
+const { verifyToken } = require('../utils/verifyToken')
 
 const router = express.Router()
 
+router.post('/updateUser/:id', verifyToken, updateUser)
 
-router.get('/', test)
 
 
 module.exports = router
