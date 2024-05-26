@@ -6,6 +6,7 @@ dotenv.config()
 
 const userRouter = require('./routes/user.route')
 const authRouter = require('./routes/auth.route')
+const listingRouter = require('./routes/listing.route')
 const errorHandler = require('./middlewares/errorHandler')
 
 process.on('uncaughtException', function (err) {
@@ -30,6 +31,7 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 
 app.use('/api/user', userRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/listing', listingRouter)
 
 
 app.use(errorHandler)

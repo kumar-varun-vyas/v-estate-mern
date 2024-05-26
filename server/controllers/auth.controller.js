@@ -27,6 +27,7 @@ const signin = async (req, res, next) => {
 
     try {
         const validUser = await User.findOne({ email })
+        console.log(validUser);
         if (!validUser) {
             return next(customError(404, 'User not found!'))
         }
@@ -37,6 +38,7 @@ const signin = async (req, res, next) => {
 
         const token = await jwt.sign({ id: validUser._id }, process.env.JWT_SECRET)
         const { password: pass, ...rest } = validUser._doc
+        console.log('rest----', rest)
         res.cookie('access_token', token, { httpOnly: true })
         res.status(200).json(rest)
 
@@ -44,7 +46,8 @@ const signin = async (req, res, next) => {
 
     } catch (error) {
         console.log("error-----", error)
-        next(error)
+
+        next(customError(500, error))
 
 
     }
@@ -58,7 +61,8 @@ const google = async (req, res, next) => {
         if (user) {
             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
             const { password: pass, ...rest } = user._doc
-            res.cookie('access-token', token, { httpOnly: true })
+            console.log("already user google".user)
+            res.cookie('access_token', token, { httpOnly: true })
                 .status(200)
                 .json({ statusCode: 200, error: false, data: rest })
         } else {
@@ -73,9 +77,8 @@ const google = async (req, res, next) => {
             })
             await newUser.save()
             const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET)
-            console.log("newUser ---", newUser)
             const { password: pass, ...rest } = newUser._doc;
-            res.cookie('access-token', token, { httpOnly: true }).status(200).json({ statusCode: 200, error: false, data: rest })
+            res.cookie('access_token', token, { httpOnly: true }).status(200).json({ statusCode: 200, error: false, data: rest })
 
         }
 

@@ -33,7 +33,7 @@ const SignUp = () => {
             })
             const data = await res.json();
             if (data.success == false) {
-                dispatch(signInFailuer(data.errMessage))
+                dispatch(signInFailuer(data.message))
 
             } else {
                 dispatch(signInSuccess(data))
