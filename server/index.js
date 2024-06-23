@@ -29,6 +29,7 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log("mongodb connection err -", err)
 })
 
+
 app.use('/api/user', userRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/listing', listingRouter)

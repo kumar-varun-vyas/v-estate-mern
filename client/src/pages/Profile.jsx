@@ -8,7 +8,7 @@ import {
     signoutSuccess,
     signoutFailuer
 } from '../redux/user/userSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 const Profile = () => {
     const fileref = useRef(null)
     const dispatch = useDispatch()
@@ -136,6 +136,9 @@ const Profile = () => {
                 <input type='email' onChange={handleChange} placeholder='email' defaultValue={currentUser.email} id="email" className='border  p-3 rounded-lg ' />
                 <input type='password' onChange={handleChange} placeholder='password' defaultValue={''} id='password' className='border  p-3 rounded-lg ' />
                 <button className='bg-slate-700 text-white p-3 uppercase rounded-lg hover:opacity-80 ' disabled={loading ? true : false} type='submit' > {loading ? 'Loading...' : "Upadate"}</button>
+                <Link className='bg-green-700 text-white p-3 uppercase rounded-lg hover:opacity-80 item-center text-center' to={"/create-listing"}>
+                    Create Listing
+                </Link>
                 <imput />
             </form>
             <div className='flex justify-between mt-2'>
