@@ -1,5 +1,5 @@
 const User = require('../models/user.model');
-const Listing = require('../models/listing.model')
+const { Listing } = require('../models/listing.model')
 const customError = require('../utils/customError');
 const bcryptjs = require('bcryptjs')
 
@@ -81,13 +81,12 @@ const signOut = async (req, res, next) => {
 const getListing = async (req, res, next) => {
 
     const id = req.params.id
-    console.log("listing calling...........")
     try {
         if (req.user.id == id) {
-            const listing = await Listing.find({ userRef: id })
+            const listing = await Listing.findOne({ userRef: id })
             res.status(200).json({
                 success: true,
-                message: "user update successfull",
+                message: "",
                 data: listing
             })
             console.log(listing)
