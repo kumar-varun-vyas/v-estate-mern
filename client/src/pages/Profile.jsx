@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getStorage, uploadBytesResumable, ref, getDownloadURL } from 'firebase/storage'
+import { getStorage, uploadBytesResumable, ref, getDownloadURL, list } from 'firebase/storage'
 import { app } from '../firebase'
 import {
     updateUserStart, updateUserFailuer, updateUserSuccess, deleteUserFailuer, deleteUserStart, deleteUserSuccess,
@@ -18,6 +18,8 @@ const Profile = () => {
     const [filePer, setFilePer] = useState(0)
     const [fileUploadError, setFileUploadError] = useState(false)
     const [formData, setFormData] = useState({})
+    const [showListingError, setShowListingError] = useState(false)
+    const [listing, setListing] = useState([])
 
     useEffect(() => {
         if (file) {
@@ -121,6 +123,23 @@ const Profile = () => {
         }
 
     }
+    const handleShowLising = async () => {
+        try {
+            const res = await fetch(`api/user/listing/${currentUser._id}`)
+            const data = await res.json()
+            console.log(data)
+            if (data.success == false) {
+                console.log(data)
+                return
+            } else {
+                setListing(data.data)
+            }
+        } catch (err) {
+            setShowListingError(err.message)
+
+        }
+
+    }
 
     return (
         <div className='p-2 max-w-lg mx-auto'>
@@ -146,6 +165,38 @@ const Profile = () => {
                 <span className='text-red-700 cursor-pointer' onClick={signout}>Sign out</span>
             </div>
             {error && <span className='text-red-700 '>{`${error}`}</span>}
+            <div>
+                <button onClick={handleShowLising} className='text-green-700 mt-5 items-center '>Show Listing</button>
+                {showListingError && <p className='text-red-700 '>{`${showListingError}`}</p>}
+
+                {listing && (
+                    <div className='flex flex-col gap-4'>
+                        <h1 className='text-center my-5 text-xl font-semibold'>Your Listings</h1>
+                        {listing.map((list) => (
+                            // console.log(list)
+
+                            <div id={list._id} className=' border rounded-lg p-3 flex justify-between 
+                    items-center gap-4'>
+
+                                <Link to={`listing/${list._id}`}>
+                                    <img className='w-16 h-16 object-contain' src={list.imageUrls[0]} />
+
+
+                                </Link>
+                                <Link to={`listing/${list._id}`} className=' text-slate-700 font-semibold hover:underline truncate flex-1'>
+                                    <p className=''>{list.name}</p>
+                                </Link>
+
+                                <div className='flex flex-col items-center'>
+                                    <button className='text-red-700 uppercase'>Delete</button>
+                                    <button className='text-green-700 uppercase'>Edit</button>
+                                </div>
+
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
 
     )

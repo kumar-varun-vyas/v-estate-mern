@@ -83,7 +83,7 @@ const getListing = async (req, res, next) => {
     const id = req.params.id
     try {
         if (req.user.id == id) {
-            const listing = await Listing.findOne({ userRef: id })
+            const listing = await Listing.find({ userRef: id })
             res.status(200).json({
                 success: true,
                 message: "",
