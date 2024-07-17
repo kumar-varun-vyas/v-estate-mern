@@ -195,8 +195,9 @@ const Profile = () => {
                         {listing.map((list) => (
                             // console.log(list)
 
-                            <div id={list._id} className=' border rounded-lg p-3 flex justify-between 
-                    items-center gap-4'>
+                            <div id={list._id}
+                                className=' border rounded-lg p-3 flex justify-between items-center gap-4'
+                            >
 
                                 <Link to={`listing/${list._id}`}>
                                     <img className='w-16 h-16 object-contain' src={list.imageUrls[0]} />
@@ -209,7 +210,7 @@ const Profile = () => {
 
                                 <div className='flex flex-col items-center'>
                                     <button onClick={() => handleListingDelete(list._id)} className='text-red-700 uppercase'>Delete</button>
-                                    <button className='text-green-700 uppercase'>Edit</button>
+                                    <Link to={`/update-listing/${list._id}`}><button className='text-green-700 uppercase'>Edit</button></Link>
                                 </div>
 
                             </div>
