@@ -58,7 +58,7 @@ const updateListing = async (req, res, next) => {
 const getListing = async (req, res, next) => {
     try {
         const listing = await Listing.findById(req.params.id);
-
+        console.log("listing-----", listing)
         if (!listing) {
             return next(customError(404, 'Listing not found!'))
         }
@@ -71,7 +71,16 @@ const getListing = async (req, res, next) => {
         }
         )
 
-    } catch (err) { console.log(err) }
+    } catch (err) {
+        if (err.name === 'CastError') {
+            // Handle the CastError
+            console.error('CastError:', err.message);
+            // Send a user-friendly error response
+            next(customError(400, 'Invalid data type'));
+        } else {
+            next(err)
+        }
+    }
 }
 
 module.exports = {

@@ -385,10 +385,6 @@ export default function UpdateListing() {
                                 </button>
                             </div>
                         ))
-
-
-
-
                     }
 
                     <button

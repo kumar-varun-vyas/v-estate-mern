@@ -199,12 +199,12 @@ const Profile = () => {
                                 className=' border rounded-lg p-3 flex justify-between items-center gap-4'
                             >
 
-                                <Link to={`listing/${list._id}`}>
+                                <Link to={`/listing/${list._id}`}>
                                     <img className='w-16 h-16 object-contain' src={list.imageUrls[0]} />
 
 
                                 </Link>
-                                <Link to={`listing/${list._id}`} className=' text-slate-700 font-semibold hover:underline truncate flex-1'>
+                                <Link to={`/listing/${list._id}`} className=' text-slate-700 font-semibold hover:underline truncate flex-1'>
                                     <p className=''>{list.name}</p>
                                 </Link>
 
