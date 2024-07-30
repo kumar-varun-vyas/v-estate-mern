@@ -68,24 +68,22 @@ const Listing = () => {
             </div>
             <div className='p-2 max-w-3xl mx-auto'>
                 <p className='text-2xl font-semibold py-5'>
-                    Tranquil Lakeside Retreat - $ 733,000
+                    {listing.name}
                 </p>
-                <p className=' text-sm flex items-center gap-1'><FaMapMarkerAlt className=' text-green-800 ' /><span className='  font-semibold text-slate-500'>789 Serenity Drive, Lakeview Haven, FAKE789</span></p>
+                <p className=' text-sm flex items-center gap-1'><FaMapMarkerAlt className=' text-green-800 ' /><span className='  font-semibold text-slate-500'> {listing.address}</span></p>
                 <div className='flex'>
-                    <p className='bg-red-900 px-2 my-2 w-full max-w-[200px] text-center text-white rounded-lg'>For sale</p>
-                    <p className='bg-green-900 px-2 m-2 w-full max-w-[200px] text-center text-white rounded-lg'>3000$ Discount</p>
+                    <p className='bg-red-900 px-3 my-2 w-full max-w-[200px] text-center text-white rounded-lg'>{listing.type == 'rent' ? "For Rent" : "For sale"}</p>
+                    <p className='bg-green-900 px-3 m-2 w-full max-w-[200px] text-center text-white rounded-lg'>{listing.offer ? `Offer Price ${+listing.regularPrice - +listing.discountPrice}` : ` ${+listing.regularPrice}`} $</p>
                 </div>
-                <p className='text-sm'><span className='font-semibold text-base'> Description</span> - Escape the hustle and bustle of city life in this 4-bedroom, 2-bathroom lakeside home.
-                    Fish off your own private dock, take in breathtaking sunsets from the screened porch,
-                    and unwind in the spacious master suite. Perfect for nature enthusiasts.</p>
+                {listing.description && <p className='text-sm'><span className='font-semibold text-base'> Description</span> - {listing.description}</p>}
                 <ul className='text-green-800 font-semibold text-sm my-2 flex flex-wrap items-center gap-4 sm:gap-6'>
-                    <li className='flex items-center gap-1 whitespace-nowrap'   ><FaBed /> 2 Beds</li>
-                    <li className='flex items-center gap-1 whitespace-nowrap  '> <FaBath /> 4 Baths</li>
-                    <li className='flex items-center gap-1 whitespace-nowrap  '> <FaParking /> No Parking</li>
-                    <li className='flex items-center gap-1 whitespace-nowrap  '> <FaChair /> Furnished</li>
+                    {listing.bedrooms > 0 && <li className='flex items-center gap-1 whitespace-nowrap'   ><FaBed /> {listing.bedrooms} Beds</li>}
+                    {listing.bathrooms > 0 && <li className='flex items-center gap-1 whitespace-nowrap  '> <FaBath />{listing.bathrooms} Baths</li>}
+                    <li className='flex items-center gap-1 whitespace-nowrap  '> <FaParking /> {listing.parking ? "Parking" : "No Parking"}</li>
+                    <li className='flex items-center gap-1 whitespace-nowrap  '> <FaChair />{listing.furnished ? 'Furnished' : 'No Furnished'} </li>
                 </ul>
                 <div className='flex flex-col' >
-                    <p className='py-2'>Contact for <span className='font-semibold'>tranquil lakeside retreat</span></p>
+                    <p className='py-2'>Contact for <span className='font-semibold'>{listing.name}</span></p>
                     <textarea type="text" className='p-2 rounded-md border border-slate-300'
                         placeholder='Enter your message here...' />
                     <button className='my-4 p-2 bg-slate-700 rounded-lg text-white uppercase'>Send Message</button>
