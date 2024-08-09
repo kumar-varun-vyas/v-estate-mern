@@ -100,9 +100,29 @@ const getListing = async (req, res, next) => {
 
 }
 
+const getUser = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.params.id)
+        if (!user) {
+            return next(customError(401, "User not found"))
+        }
+        const { password: pass, ...rest } = user._doc
+        res.status(200).json({
+            success: true,
+            message: "user varified!",
+            data: rest
+
+        })
+    } catch (err) {
+        console.log(err)
+        next(err)
+    }
+}
+
 module.exports = {
     updateUser,
     deleteUser,
     signOut,
-    getListing
+    getListing,
+    getUser
 }
