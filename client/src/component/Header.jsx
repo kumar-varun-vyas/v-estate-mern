@@ -1,11 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const Header = () => {
 
     const { currentUser } = useSelector(state => state.user)
+    const [searchInput, setSearchInput] = useState('')
+    const navigate = useNavigate()
+    const submitSearch = (e) => {
+        e.preventDefault();
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('searchTerm', searchInput)
+        const searchQuery = urlParams.toString()
+        console.log("search query", searchQuery)
+        navigate(`/search?${searchQuery}`)
+
+    }
+    useEffect(() => {
+        const urlParams = new URLSearchParams(location.search);
+        const searchInputUrl = urlParams.get('searchTerm')
+        if (searchInputUrl)
+            setSearchInput(urlParams.get('searchTerm'))
+    }, [location.search])
     return (
         <header className='bg-slate-200 shadow-md '>
             <div className=' flex justify-between items-center max-w-6xl m-auto p-3'>
@@ -15,9 +32,10 @@ const Header = () => {
                         <span className='text-slate-700'>Estate</span>
                     </h1>
                 </Link>
-                <form className='bg-slate-100 p-3 rounded-lg flex items-center '>
-                    <input type='text' placeholder='Search...' className='bg-transparent focus: outline-none w-24 sm:w-64' />
-                    <FaSearch className='text-slate-500' />
+                <form onSubmit={submitSearch} className='bg-slate-100 p-3 rounded-lg flex items-center '>
+                    <input type='text' placeholder='Search...' className='bg-transparent focus: outline-none w-24 sm:w-64' value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)} />
+                    <button type='submit'> <FaSearch className='text-slate-500' /></button>
                 </form>
                 <ul className='flex  gap-4 items-center'>
                     <Link to="/"><li className='hidden sm:inline text-slate-700 hover:underline'>Home</li>
